@@ -1,3 +1,7 @@
+// Önce Bootstrap yükleniyor (Genel stiller)
+import "bootstrap/dist/css/bootstrap.min.css";
+// Sonra senin kendi CSS dosyan ve Tailwind yükleniyor (Bootstrap'i ezebilmesi için)
+import "./globals.css"; 
 import Sidebar from "@/components/Sidebar";
 
 export default function RootLayout({
@@ -14,10 +18,10 @@ export default function RootLayout({
             minHeight: "100vh",
           }}
         >
-          {/* Sidebar */}
+          {/* Sidebar yapın aynen korunuyor */}
           <Sidebar />
 
-          {/* Ana içerik */}
+          {/* Ana içerik yapın aynen korunuyor */}
           <main
             style={{
               flex: 1,

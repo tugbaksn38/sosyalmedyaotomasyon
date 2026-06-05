@@ -1,5 +1,4 @@
 //C:\Users\sifre\Desktop\sosyalmedya\sosyalmedya\src\app\page.tsx
-
 "use client";
 
 import { useEffect, useState } from "react";
@@ -75,7 +74,6 @@ export default function DashboardPage() {
     fetchStats();
   }, []);
 
-  // 📊 BAR CHART
   const barData = {
     labels: ["Danışan", "Hesap", "Paket", "Rapor"],
     datasets: [
@@ -97,7 +95,6 @@ export default function DashboardPage() {
     ],
   };
 
-  // 🍩 DOUGHNUT CHART
   const doughnutData = {
     labels: ["Danışan", "Hesap", "Paket", "Rapor"],
     datasets: [
@@ -119,31 +116,54 @@ export default function DashboardPage() {
   };
 
   if (loading) {
-    return <div style={{ padding: 20 }}>Yükleniyor...</div>;
+    return (
+      <div className="container mt-5 text-center">
+        <div className="spinner-border text-primary" role="status"></div>
+        <p className="mt-2 text-muted">Yükleniyor...</p>
+      </div>
+    );
   }
 
   return (
-    <div style={{ padding: 20 }}>
-      <h2>Dashboard</h2>
+    <div className="container mt-4">
+      <h2 className="mb-4 text-gray-800 fw-bold">📊 Dashboard</h2>
 
       {/* 🔢 SAYI KARTLARI */}
-      <div style={{ display: "flex", gap: 20, marginBottom: 30 }}>
-        <StatCard title="Danışan" value={stats.danisan} />
-        <StatCard title="Hesap" value={stats.hesap} />
-        <StatCard title="Paket" value={stats.paket} />
-        <StatCard title="Rapor" value={stats.rapor} />
+      <div className="row g-3 mb-4">
+        <div className="col-12 col-sm-6 col-md-3">
+          <StatCard title="Danışan" value={stats.danisan} borderClass="border-start border-primary border" />
+        </div>
+        <div className="col-12 col-sm-6 col-md-3">
+          <StatCard title="Hesap" value={stats.hesap} borderClass="border-start border-success border-2" />
+        </div>
+        <div className="col-12 col-sm-6 col-md-3">
+          <StatCard title="Paket" value={stats.paket} borderClass="border-start border-warning border-2" />
+        </div>
+        <div className="col-12 col-sm-6 col-md-3">
+          <StatCard title="Rapor" value={stats.rapor} borderClass="border-start border-danger border-2" />
+        </div>
       </div>
 
       {/* 📈 GRAFİKLER */}
-      <div style={{ display: "flex", gap: 40 }}>
-        <div style={{ width: "55%" }}>
-          <h4>Genel Durum</h4>
-          <Bar data={barData} />
+      <div className="row g-4">
+        <div className="col-12 col-lg-7">
+          <div className="card shadow-sm h-100">
+            <div className="card-header bg-light fw-bold">Genel Durum</div>
+            <div className="card-body">
+              <Bar data={barData} options={{ responsive: true }} />
+            </div>
+          </div>
         </div>
 
-        <div style={{ width: "35%" }}>
-          <h4>Dağılım</h4>
-          <Doughnut data={doughnutData} />
+        <div className="col-12 col-lg-5">
+          <div className="card shadow-sm h-100">
+            <div className="card-header bg-light fw-bold">Dağılım</div>
+            <div className="card-body d-flex align-items-center justify-content-center">
+              <div style={{ maxWidth: "300px", width: "100%" }}>
+                <Doughnut data={doughnutData} options={{ responsive: true }} />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -151,18 +171,13 @@ export default function DashboardPage() {
 }
 
 // 🔹 KÜÇÜK KART
-function StatCard({ title, value }: { title: string; value: number }) {
+function StatCard({ title, value, borderClass }: { title: string; value: number; borderClass?: string }) {
   return (
-    <div
-      style={{
-        padding: 20,
-        border: "1px solid #ddd",
-        borderRadius: 8,
-        minWidth: 130,
-      }}
-    >
-      <div style={{ fontSize: 14, color: "#666" }}>{title}</div>
-      <div style={{ fontSize: 28, fontWeight: "bold" }}>{value}</div>
+    <div className={`card shadow-sm h-100 ${borderClass || ''}`}>
+      <div className="card-body py-3">
+        <div className="text-uppercase font-weight-bold text-muted small mb-1">{title}</div>
+        <div className="h3 mb-0 font-weight-bold text-dark fw-bold">{value}</div>
+      </div>
     </div>
   );
 }
